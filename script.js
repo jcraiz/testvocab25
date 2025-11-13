@@ -84,6 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
 });
 
+// Audio playback functions
+function playWord(word) {
+    const audio = new Audio(`sound/${word.toLowerCase()}.mp3`);
+    audio.play().catch(e => console.log('Audio play failed:', e));
+}
+
+function playExample(word) {
+    const audio = new Audio(`sound/ex_${word.toLowerCase()}.mp3`);
+    audio.play().catch(e => console.log('Audio play failed:', e));
+}
+
 function loadWords() {
     const vocabContainer = document.getElementById('vocab-container');
     const startIndex = currentIndex;
@@ -104,14 +115,14 @@ function loadWords() {
             <p class="text-gray-600">${word.definition}</p>
             <div class="details hidden mt-4 p-3 bg-indigo-50 rounded-lg">
                 <div class="flex justify-between items-start mb-3">
-                    <div>
+                    <div class="flex items-center">
                         <h4 class="text-base font-bold text-indigo-800">${word.word}</h4>
-                        <span class="text-xs px-1 py-0.5 bg-indigo-200 text-indigo-800 rounded">${word.partOfSpeech}</span>
+                        <i class="fas fa-volume-up sound-icon" onclick="playWord('${word.word}')"></i>
                     </div>
-                    <i data-feather="bookmark" class="text-indigo-500 cursor-pointer hover:text-indigo-700"></i>
+                    <span class="text-xs px-1 py-0.5 bg-indigo-200 text-indigo-800 rounded">${word.partOfSpeech}</span>
                 </div>
                 <div class="mb-3">
-                    <h5 class="font-semibold text-gray-700 mb-1 text-sm">Example</h5>
+                    <h5 class="font-semibold text-gray-700 mb-1 text-sm flex items-center">Example <i class="fas fa-volume-up sound-icon ml-2" onclick="playExample('${word.word}')"></i></h5>
                     <p class="text-gray-800 text-sm italic">"${word.example}"</p>
                 </div>
                 <div class="mb-2">
@@ -123,7 +134,11 @@ function loadWords() {
             </div>
         `;
         
-        wordElement.addEventListener('click', (e) => handleWordClick(wordElement, word));
+        wordElement.addEventListener('click', (e) => {
+            // Prevent audio play on card click
+            if (e.target.classList.contains('sound-icon')) return;
+            handleWordClick(wordElement, word);
+        });
         vocabContainer.appendChild(wordElement);
     }
     
@@ -167,10 +182,11 @@ function showWordDetails(word) {
     detailsContainer.innerHTML = `
         <div class="word-detail-card w-full bg-indigo-50 rounded-lg p-6">
             <div class="flex justify-between items-start mb-4">
-                <div>
+                <div class="flex items-center">
                     <h2 class="text-2xl font-bold text-indigo-800">${word.word}</h2>
-                    <span class="text-sm px-2 py-1 bg-indigo-200 text-indigo-800 rounded-full">${word.partOfSpeech}</span>
+                    <i class="fas fa-volume-up sound-icon" onclick="playWord('${word.word}')"></i>
                 </div>
+                <span class="text-sm px-2 py-1 bg-indigo-200 text-indigo-800 rounded-full">${word.partOfSpeech}</span>
                 <i data-feather="bookmark" class="text-indigo-500 cursor-pointer hover:text-indigo-700"></i>
             </div>
             
@@ -180,7 +196,7 @@ function showWordDetails(word) {
             </div>
             
             <div class="mb-4">
-                <h3 class="font-semibold text-gray-700 mb-1">Example</h3>
+                <h3 class="font-semibold text-gray-700 mb-1 flex items-center">Example <i class="fas fa-volume-up sound-icon ml-2" onclick="playExample('${word.word}')"></i></h3>
                 <p class="text-gray-800 italic">"${word.example}"</p>
             </div>
             
