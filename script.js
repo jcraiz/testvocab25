@@ -199,14 +199,29 @@ function showWordDetails(word) {
 function updateProgress() {
     const progress = (viewed.size / vocabulary.length) * 100;
     
-    // Update pie chart (exact from grammar site)
+    // Update pie chart for desktop
     var progressRing = document.getElementById('progressRing');
     var progressText = document.getElementById('progressText');
-    var circumference = 2 * Math.PI * 54; // 2πr where r=54
-    var offset = circumference - (progress / 100) * circumference;
+    if (progressRing) {
+        var circumference = 2 * Math.PI * 54; // 2πr where r=54
+        var offset = circumference - (progress / 100) * circumference;
+        progressRing.style.strokeDashoffset = offset;
+    }
+    if (progressText) {
+        progressText.textContent = Math.round(progress) + '%';
+    }
     
-    progressRing.style.strokeDashoffset = offset;
-    progressText.textContent = Math.round(progress) + '%';
+    // Update mobile linear bar
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+        const barFill = document.querySelector('.progress-bar-fill');
+        if (barFill) {
+            barFill.style.width = progress + '%';
+        }
+        if (progressText) {
+            progressText.textContent = Math.round(progress) + '%';
+        }
+    }
 }
 
 function resetProgress() {
@@ -219,5 +234,7 @@ function resetProgress() {
     
     // Clear desktop details
     const detailsContainer = document.getElementById('word-details');
-    detailsContainer.innerHTML = `<p class="text-gray-500">Select a word to see its details</p>`;
+    if (detailsContainer) {
+        detailsContainer.innerHTML = `<p class="text-gray-500">Select a word to see its details</p>`;
+    }
 }
