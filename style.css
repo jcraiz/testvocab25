@@ -285,4 +285,12 @@ h3 {
     h2 {
         font-size: 1.2em;
     }
+
+    /* Mobile-specific button enhancements for better touch interaction */
+    #load-more {
+        min-height: 48px;
+        width: 100%;
+        max-width: 250px;
+        touch-action: manipulation;
+    }
 }
