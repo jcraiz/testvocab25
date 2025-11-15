@@ -276,7 +276,7 @@ h3 { font-size: 1.2em; line-height: 1.3; }
         flex-shrink: 0;
     }
 
-    main { padding-bottom: 150px; } /* <-- MODIFIED VALUE */
+    main { padding-bottom: 180px; } /* <-- MODIFIED VALUE */
 
     p, .text-gray-600, .text-gray-500, .text-gray-800 {
         font-size: 1.05em;
