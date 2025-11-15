@@ -216,6 +216,11 @@ h3 { font-size: 1.2em; line-height: 1.3; }
 #feedback.incorrect { color: #ef4444; }
 
 @media (max-width: 768px) {
+    /* === DEFINITIVE FIX: Add padding to the body to create space for the fixed progress bar === */
+    body {
+        padding-bottom: 100px;
+    }
+
     .floating-progress {
         top: auto;
         bottom: 0;
@@ -276,7 +281,10 @@ h3 { font-size: 1.2em; line-height: 1.3; }
         flex-shrink: 0;
     }
 
-    main { padding-bottom: 180px; } /* <-- MODIFIED VALUE */
+    /* === DEFINITIVE FIX: Removed the redundant padding from the main element === */
+    main {
+        padding-bottom: 2rem; /* Resetting to a standard padding value */
+    }
 
     p, .text-gray-600, .text-gray-500, .text-gray-800 {
         font-size: 1.05em;
